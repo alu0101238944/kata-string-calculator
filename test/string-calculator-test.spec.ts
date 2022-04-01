@@ -3,6 +3,7 @@ import {add_number} from '../src/string-calculator';
 
 test('Should sum zero if no numbers', () => {
   expect(add_number('')).toEqual(0);
+  expect(add_number('a')).toEqual(0);
 });
 
 test('Should return the number when is the only one', () => {
