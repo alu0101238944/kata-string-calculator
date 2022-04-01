@@ -24,8 +24,9 @@ const checkPositive = (numbers: Array<number>) => {
 export const addNumber = (operation: string) => {
   let delimiters = /,|\n/;
   if (operation.startsWith('//') && operation.length > 2) {
-    delimiters = new RegExp(operation[2]);
-    operation = operation.slice(4);
+    operation = operation.slice(2);
+    delimiters = new RegExp(operation.split('\n')[0]);
+    operation = operation.split('\n')[1];
   }
 
   let numbers = operation.split(delimiters).map(toNumber);
