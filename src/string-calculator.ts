@@ -2,7 +2,7 @@
 const toNumber = (symbol: string) => {
   const value = Number(symbol);
   if (isNaN(value)) {
-    throw Error('Invalid value: ' + value);
+    throw Error('Invalid value: ' + symbol);
   }
   return value;
 };

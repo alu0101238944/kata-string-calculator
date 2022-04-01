@@ -38,8 +38,8 @@ test('Should be ignored numbers bigger than 1000', () => {
   expect(addNumber('//;\n6;3;1;1001')).toEqual(10);
 });
 
-/*
-  test('Delimiters can be of any length', () => {
-    expect(addNumber('//;-;\n2;-;10;-;3')).toEqual(15);
-  });
-*/
+
+test('Delimiters can be of any length', () => {
+  expect(addNumber('//;-;\n2;-;10;-;3')).toEqual(15);
+});
+
