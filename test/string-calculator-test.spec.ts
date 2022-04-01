@@ -36,5 +36,5 @@ test('Should show all negatives in the exception message', () => {
 });
 
 test('Should be ignored numbers bigger than 1000', () => {
-  expect(() => add_number('//;\n6;3;1;1002')).toEqual(10);
+  expect(add_number('//;\n6;3;1;1002')).toEqual(10);
 });
