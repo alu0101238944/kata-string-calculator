@@ -1,9 +1,8 @@
 
-import {add_number as addNumber} from '../src/string-calculator';
+import {addNumber} from '../src/string-calculator';
 
-test('Should sum zero if no numbers', () => {
+test('Should sum zero if empty string', () => {
   expect(addNumber('')).toEqual(0);
-  expect(addNumber('a')).toEqual(0);
 });
 
 test('Should return the number when is the only one', () => {
@@ -38,3 +37,9 @@ test('Should show all negatives in the exception message', () => {
 test('Should be ignored numbers bigger than 1000', () => {
   expect(addNumber('//;\n6;3;1;1001')).toEqual(10);
 });
+
+/*
+  test('Delimiters can be of any length', () => {
+    expect(addNumber('//;-;\n2;-;10;-;3')).toEqual(15);
+  });
+*/

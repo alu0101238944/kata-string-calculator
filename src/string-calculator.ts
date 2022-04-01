@@ -1,7 +1,10 @@
 
 const toNumber = (symbol: string) => {
   const value = Number(symbol);
-  return isNaN(value) ? 0 : value;
+  if (isNaN(value)) {
+    throw Error('Invalid value: ' + value);
+  }
+  return value;
 };
 
 const sumNumbers = (value1: number, value2: number) => value1 + value2;
@@ -11,10 +14,8 @@ const checkPositive = (numbers: Array<number>) => {
   if (filtered_numbers.length > 0) {
     let filtered_numbers_string = '';
     for (let i = 0; i < filtered_numbers.length; i++) {
-      filtered_numbers_string += filtered_numbers[i];
-      if (i < filtered_numbers.length - 1) {
-        filtered_numbers_string += ', ';
-      }
+      filtered_numbers_string += filtered_numbers[i] +
+          ((i < filtered_numbers.length - 1) ? ', ' : '');
     }
     throw Error('Negatives not allowed: ' + filtered_numbers_string);
   }
