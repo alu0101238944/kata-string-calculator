@@ -1,7 +1,13 @@
 
-export const add_number = (operation: string) => {
-  return operation.split(',').map((symbol) => {
-    const number = Number(symbol);
-    return isNaN(number) ? 0 : number;
-  }).reduce((acc, number) => acc += number, 0);
-};
+const toNumber = (symbol: string) => {
+  const value = Number(symbol);
+  return isNaN(value) ? 0 : value;
+}
+
+const sumNumbers = (value1: number, value2: number) => value1 + value2;
+
+export const add_number = (operation: string) =>
+  operation
+    .split(',')
+    .map(toNumber)
+    .reduce(sumNumbers, 0);
