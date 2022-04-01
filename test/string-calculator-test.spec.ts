@@ -1,6 +1,10 @@
 
 import {add_number} from '../src/string-calculator';
 
-test('shouldSumZeroIfNoNumbers', () => {
+test('Should sum zero if no numbers', () => {
   expect(add_number('')).toEqual(0);
+});
+
+test('Should return the number when is the only one', () => {
+  expect(add_number('1')).toEqual(1);
 });
