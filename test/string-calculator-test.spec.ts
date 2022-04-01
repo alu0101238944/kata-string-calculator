@@ -25,3 +25,8 @@ test('Should return the addition of multiple numbers separated by commas or new 
 test('Should specify the delimiter starting with //[delimiter]\\n', () => {
   expect(add_number('//;\n1;2')).toEqual(3);
 });
+
+test('Should throw an exception "Negatives not allowed" - and the negative that was passed', () => {
+  expect(add_number('//;\n-1;2')).toThrowError('Negatives not allowed: -1');
+  expect(add_number('//;\n1;-2')).toThrowError('Negatives not allowed: -2');
+});
