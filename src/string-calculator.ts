@@ -1,4 +1,8 @@
 
 export const add_number = (operation: string) => {
-  return isNaN(Number(operation)) ? 0 : Number(operation);
+  let value = 0;
+  for (let char of operation) {
+    value += isNaN(Number(char)) ? 0 : Number(char);
+  }
+  return value;
 };
