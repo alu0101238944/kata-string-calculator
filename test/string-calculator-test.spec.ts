@@ -7,4 +7,5 @@ test('Should sum zero if no numbers', () => {
 
 test('Should return the number when is the only one', () => {
   expect(add_number('1')).toEqual(1);
+  expect(add_number('2')).toEqual(2);
 });
