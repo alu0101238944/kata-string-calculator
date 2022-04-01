@@ -27,8 +27,10 @@ export const addNumber = (operation: string) => {
     operation = operation.slice(2);
     if (operation[0] == '[') {
       operation = operation.slice(1);
+      delimiters = new RegExp(operation.split(']')[0]);
+    } else {
+      delimiters = new RegExp(operation.split('\n')[0]);
     }
-    delimiters = new RegExp(operation.split(']')[0]);
     operation = operation.split('\n')[1];
   }
 
