@@ -10,7 +10,7 @@ export const add_number = (operation: string) => {
   let delimiters = /,|\n/;
   if (operation.startsWith('//') && operation.length > 2) {
     delimiters = new RegExp(operation[2]);
-    operation = operation.slice(3);
+    operation = operation.slice(4);
   }
   return operation
     .split(delimiters)
