@@ -14,4 +14,10 @@ test('Should return the number when is the only one', () => {
 
 test('Should return the addition of multiple numbers separated by commas', () => {
   expect(add_number('1,2')).toEqual(3);
+  expect(add_number('1,2,4')).toEqual(7);
+});
+
+test('Should return the addition of multiple numbers separated by commas or new lines', () => {
+  expect(add_number('1,2\n4')).toEqual(7);
+  expect(add_number('10\n2\n4,4')).toEqual(20);
 });
