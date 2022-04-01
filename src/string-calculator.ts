@@ -1,8 +1,7 @@
 
 export const add_number = (operation: string) => {
-  let value = 0;
-  for (let char of operation) {
-    value += isNaN(Number(char)) ? 0 : Number(char);
-  }
-  return value;
+  return operation.split(',').map((symbol) => {
+    const number = Number(symbol);
+    return isNaN(number) ? 0 : number;
+  }).reduce((acc, number) => acc += number, 0);
 };
