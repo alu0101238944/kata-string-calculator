@@ -10,3 +10,7 @@ test('Should return the number when is the only one', () => {
   expect(add_number('1')).toEqual(1);
   expect(add_number('2')).toEqual(2);
 });
+
+test('Should return the addition of multiple numbers separated by commas', () => {
+  expect(add_number('1,2')).toEqual(3);
+});
