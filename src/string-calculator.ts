@@ -20,7 +20,7 @@ const checkPositive = (numbers: Array<number>) => {
   }
 };
 
-export const add_number = (operation: string) => {
+export const addNumber = (operation: string) => {
   let delimiters = /,|\n/;
   if (operation.startsWith('//') && operation.length > 2) {
     delimiters = new RegExp(operation[2]);
