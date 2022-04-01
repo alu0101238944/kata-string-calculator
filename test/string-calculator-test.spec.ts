@@ -30,3 +30,7 @@ test('Should throw an exception "Negatives not allowed" - and the negative that 
   expect(() => add_number('//;\n-1;2')).toThrowError('Negatives not allowed: -1');
   expect(() => add_number('//;\n1;-2')).toThrowError('Negatives not allowed: -2');
 });
+
+test('Should show all negatives in the exception message', () => {
+  expect(() => add_number('//;\n-1;-2')).toThrowError('Negatives not allowed: -1, -2');
+});
