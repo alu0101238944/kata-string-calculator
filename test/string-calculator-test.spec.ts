@@ -21,3 +21,7 @@ test('Should return the addition of multiple numbers separated by commas or new 
   expect(add_number('1,2\n4')).toEqual(7);
   expect(add_number('10\n2\n4,4')).toEqual(20);
 });
+
+test('Should specify the delimiter starting with //[delimiter]\\n', () => {
+  expect(add_number('//;\n1;2')).toEqual(3);
+});
