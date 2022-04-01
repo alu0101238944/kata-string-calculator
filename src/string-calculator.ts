@@ -1,2 +1,2 @@
 
-export const add_number = (operation: string) => operation == '1' ? 1 : 0;
+export const add_number = (operation: string) => operation != '' ? Number(operation) : 0;
