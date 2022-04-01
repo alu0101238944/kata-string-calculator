@@ -27,7 +27,8 @@ export const add_number = (operation: string) => {
     operation = operation.slice(4);
   }
 
-  const numbers = operation.split(delimiters).map(toNumber);
+  let numbers = operation.split(delimiters).map(toNumber);
   checkPositive(numbers);
+  numbers = numbers.filter(number => number <= 1000);
   return numbers.reduce(sumNumbers, 0);
 };
