@@ -14,3 +14,7 @@ test('Should sum numbers separated with commas', () => {
 test('Should sum numbers separated with commas and newlines', () => {
   expect(stringCalculator('1,23\n76')).toEqual(100);
 });
+
+test('Should change the default delimiter using "//[delimiter]\\n[numbers…]"', () => {
+  expect(stringCalculator('//;\n1;2')).toEqual(3);
+});
