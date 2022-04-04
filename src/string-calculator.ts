@@ -1,13 +1,20 @@
 
 const recursiveStringCalculator = (expression: string, acc: string) => {
-  if (expression.length === 0) {
-    return Number(acc);
+  const isEmptyExpression = expression.length === 0;
+  const currentChar = expression[0];
+  const isCommaCurrentChar = currentChar === ',';
+  let result = 0;
+  if (isEmptyExpression || isCommaCurrentChar) {
+    result += Number(acc);
   }
-  const current_char = expression[0];
-  if (current_char === ',') {
-    return Number(acc) + recursiveStringCalculator(expression.slice(1), '');
+  if (!isEmptyExpression) {
+    if (isCommaCurrentChar) {
+      result += recursiveStringCalculator(expression.slice(1), '');
+    } else {
+      result += recursiveStringCalculator(expression.slice(1), acc + currentChar);
+    }
   }
-  return recursiveStringCalculator(expression.slice(1), acc + current_char);
+  return result;
 };
 
 export const stringCalculator = (expression: string) => {
