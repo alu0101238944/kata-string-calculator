@@ -27,3 +27,7 @@ test('Should throw an exception "Negatives not allowed" - and the negative that 
 test('Should show all negatives in the exception message', () => {
   expect(() => stringCalculator('//;\n-1;-2')).toThrowError('Negatives not allowed: -1,-2');
 });
+
+test('Should ignore numbers bigger than 1000', () => {
+  expect(stringCalculator('//;\n6;3;1;1001')).toEqual(10);
+});
