@@ -21,17 +21,30 @@ const checkPositive = (numbers: Array<number>) => {
   }
 };
 
+const escapeRegExp = (string) => 
+    string.replace(/[.*+?^${}()|\\]/g, '\\$&');
+
 export const addNumber = (operation: string) => {
   let delimiters = /,|\n/;
   if (operation.startsWith('//') && operation.length > 2) {
-    operation = operation.slice(2);
-    if (operation[0] == '[') {
-      operation = operation.slice(1);
-      delimiters = new RegExp(operation.split(']')[0]);
-    } else {
-      delimiters = new RegExp(operation.split('\n')[0]);
+    delimiters = /^$x/; // Does not match anything
+    operation = operation.slice(2); // '//'
+    if (operation[1] == '\n') {
+      delimiters = new RegExp(operation[0]);
+    } else if (operation[0] == '[') {
+      while (operation[0] !== '\n') {
+        operation = operation.slice(1); // '['
+        let current_delimiter = '';
+        while (operation[0] !== ']') {
+          current_delimiter += operation[0];
+          operation = operation.slice(1);
+        }
+        operation = operation.slice(1); // ']'
+        delimiters = new RegExp(delimiters.source + '|' +
+            new RegExp(escapeRegExp(current_delimiter)).source);
+      }
     }
-    operation = operation.split('\n')[1];
+    operation = operation.slice(1); // '\n'
   }
 
   let numbers = operation.split(delimiters).map(toNumber);
