@@ -23,3 +23,7 @@ test('Should throw an exception "Negatives not allowed" - and the negative that 
   expect(() => stringCalculator('//;\n-1;2')).toThrowError('Negatives not allowed: -1');
   expect(() => stringCalculator('//;\n1;-2')).toThrowError('Negatives not allowed: -2');
 });
+
+test('Should show all negatives in the exception message', () => {
+  expect(() => stringCalculator('//;\n-1;-2')).toThrowError('Negatives not allowed: -1,-2');
+});
