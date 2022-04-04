@@ -1,4 +1,24 @@
 
+const setDelimiters = (expression: string) => {
+  let delimiters = [',', '\n'];
+  if (expression.startsWith('//')) {
+    expression = expression.slice(2);
+    delimiters = [expression[0]];
+    expression = expression.slice(1);
+    if (expression.startsWith('\n')) {
+      expression = expression.slice(1);
+      return {
+        expression,
+        delimiters
+      }
+    }
+  }
+  return {
+    expression,
+    delimiters
+  }
+};
+
 const recursiveStringCalculator = (expression: string, acc: string, delimiters: Array<string>) => {
   const isEmptyExpression = expression.length === 0;
   const currentChar = expression[0];
@@ -18,5 +38,6 @@ const recursiveStringCalculator = (expression: string, acc: string, delimiters: 
 };
 
 export const stringCalculator = (expression: string) => {
-  return recursiveStringCalculator(expression, '', [',', '\n']);
+  const {'delimiters': parsedDelimiters, 'expression': parserdExpression} = setDelimiters(expression);
+  return recursiveStringCalculator(parserdExpression, '', parsedDelimiters);
 };
