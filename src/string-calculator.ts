@@ -24,30 +24,38 @@ const checkPositive = (numbers: Array<number>) => {
 const escapeRegExp = (string) => 
     string.replace(/[.*+?^${}()|\\]/g, '\\$&');
 
-export const addNumber = (operation: string) => {
+const parseDelimiters = (expression: string) => {
   let delimiters = /,|\n/;
-  if (operation.startsWith('//') && operation.length > 2) {
+  if (expression.startsWith('//') && expression.length > 2) {
     delimiters = /^$x/; // Does not match anything
-    operation = operation.slice(2); // '//'
-    if (operation[1] == '\n') {
-      delimiters = new RegExp(operation[0]);
-    } else if (operation[0] == '[') {
-      while (operation[0] !== '\n') {
-        operation = operation.slice(1); // '['
+    expression = expression.slice(2); // '//'
+    if (expression[1] === '\n') { // Unique unitary delimiter
+      delimiters = new RegExp(escapeRegExp(expression[0]));
+    } else if (expression[0] === '[') {
+      while (expression[0] !== '\n') {
+        expression = expression.slice(1); // '['
         let current_delimiter = '';
-        while (operation[0] !== ']') {
-          current_delimiter += operation[0];
-          operation = operation.slice(1);
+        while (expression[0] !== ']') {
+          current_delimiter += expression[0];
+          expression = expression.slice(1);
         }
-        operation = operation.slice(1); // ']'
+        expression = expression.slice(1); // ']'
         delimiters = new RegExp(delimiters.source + '|' +
             new RegExp(escapeRegExp(current_delimiter)).source);
       }
     }
-    operation = operation.slice(1); // '\n'
+    expression = expression.slice(1); // '\n'
   }
+  return {expression, delimiters};
+};
 
-  let numbers = operation.split(delimiters).map(toNumber);
+export const stringCalculator = (expression: string) => {
+  const {
+    'expression': parsedExpression,
+    'delimiters': parsedDelimiters
+  } = parseDelimiters(expression);
+
+  let numbers = parsedExpression.split(parsedDelimiters).map(toNumber);
   checkPositive(numbers);
   numbers = numbers.filter(number => number <= 1000);
   return numbers.reduce(sumNumbers, 0);
