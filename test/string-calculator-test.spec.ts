@@ -18,3 +18,8 @@ test('Should sum numbers separated with commas and newlines', () => {
 test('Should change the default delimiter using "//[delimiter]\\n[numbers…]"', () => {
   expect(stringCalculator('//;\n1;2')).toEqual(3);
 });
+
+test('Should throw an exception "Negatives not allowed" - and the negative that was passed', () => {
+  expect(() => stringCalculator('//;\n-1;2')).toThrowError('Negatives not allowed: -1');
+  expect(() => stringCalculator('//;\n1;-2')).toThrowError('Negatives not allowed: -2');
+});
