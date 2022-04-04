@@ -25,7 +25,11 @@ const recursiveStringCalculator = (expression: string, acc: string, delimiters: 
   const isDelimiterCurrentChar = delimiters.includes(currentChar);
   let result = 0;
   if (isEmptyExpression || isDelimiterCurrentChar) {
-    result += Number(acc);
+    const number_acc = Number(acc);
+    if (number_acc < 0) {
+      throw Error('Negatives not allowed: ' + number_acc);
+    }
+    result += number_acc;
   }
   if (!isEmptyExpression) {
     if (isDelimiterCurrentChar) {
