@@ -19,7 +19,7 @@ const setDelimiters = (expression: string) => {
   }
 };
 
-const recursiveStringCalculator = (expression: string, acc: string, delimiters: Array<string>) => {
+const recursiveStringCalculator = (expression: string, acc: string, delimiters: Array<string>, negatives: Array<number>) => {
   const isEmptyExpression = expression.length === 0;
   const currentChar = expression[0];
   const isDelimiterCurrentChar = delimiters.includes(currentChar);
@@ -27,15 +27,18 @@ const recursiveStringCalculator = (expression: string, acc: string, delimiters: 
   if (isEmptyExpression || isDelimiterCurrentChar) {
     const number_acc = Number(acc);
     if (number_acc < 0) {
-      throw Error('Negatives not allowed: ' + number_acc);
+      negatives.push(number_acc);
+    }
+    if (isEmptyExpression && negatives.length > 0) {
+      throw Error('Negatives not allowed: ' + negatives);
     }
     result += number_acc;
   }
   if (!isEmptyExpression) {
     if (isDelimiterCurrentChar) {
-      result += recursiveStringCalculator(expression.slice(1), '', delimiters);
+      result += recursiveStringCalculator(expression.slice(1), '', delimiters, negatives);
     } else {
-      result += recursiveStringCalculator(expression.slice(1), acc + currentChar, delimiters);
+      result += recursiveStringCalculator(expression.slice(1), acc + currentChar, delimiters, negatives);
     }
   }
   return result;
@@ -43,5 +46,5 @@ const recursiveStringCalculator = (expression: string, acc: string, delimiters: 
 
 export const stringCalculator = (expression: string) => {
   const {'delimiters': parsedDelimiters, 'expression': parserdExpression} = setDelimiters(expression);
-  return recursiveStringCalculator(parserdExpression, '', parsedDelimiters);
+  return recursiveStringCalculator(parserdExpression, '', parsedDelimiters, []);
 };
