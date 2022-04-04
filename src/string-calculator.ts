@@ -32,7 +32,7 @@ const recursiveStringCalculator = (expression: string, acc: string, delimiters: 
     if (isEmptyExpression && negatives.length > 0) {
       throw Error('Negatives not allowed: ' + negatives);
     }
-    result += number_acc;
+    result += number_acc <= 1000 ? number_acc : 0;
   }
   if (!isEmptyExpression) {
     if (isDelimiterCurrentChar) {
