@@ -1,8 +1,8 @@
 
-const setDelimiters = (expression: string) => {
+const setDelimiters = (expression: string): [string[], string] => {
   let delimiters = [',', '\n'];
   if (expression.startsWith('//')) {
-    expression = expression.slice(2);
+    expression = expression.slice(2); // '//'
     const current_char = expression[0];
     if (current_char !== '[') {
       delimiters = [current_char];
@@ -15,17 +15,17 @@ const setDelimiters = (expression: string) => {
       expression = String(expression.split('\n').slice(1));
     }
   }
-  return {
-    expression,
-    delimiters
-  }
+  return [
+    delimiters,
+    expression
+  ]
 };
 
 const getMultipleDelimiters = (expression: string,
     delimiters: Array<string>) => {
-  expression = expression.slice(1);
+  expression = expression.slice(1); // [
   const delimiter = getDelimiter(expression, '');
-  expression = expression.slice(delimiter.length + 1);
+  expression = expression.slice(delimiter.length + 1); // delimiter ]
   delimiters.push(delimiter);
   if (expression[0] === '[') {
     return getMultipleDelimiters(expression, delimiters);
@@ -43,11 +43,11 @@ const getDelimiter = (expression: string, acc: string) => {
   }
 };
 
-const isDigit = (char: string) => char == '-' || (char >= '0' && char <= '9');
+const isNumericChar = (char: string) => char === '-' || (char >= '0' && char <= '9');
 
 const skipDelimiter = (expression: string, acc: string) => {
-  if (isDigit(expression[1])) {
-    return [expression, acc];
+  if (isNumericChar(expression[1])) {
+    return [expression, acc + expression[0]];
   } else {
     return skipDelimiter(expression.slice(1), acc + expression[0]);
   }
@@ -57,15 +57,17 @@ const recursiveStringCalculator = (expression: string,
     acc: string, delimiters: Array<string>, negatives: Array<number>) => {
   const isEmptyExpression = expression.length === 0;
   let currentChar = expression[0];
-  const isDelimiterCurrentChar = !isDigit(currentChar);
+  const isDelimiterCurrentChar = !isNumericChar(currentChar);
+
   if (isDelimiterCurrentChar && currentChar) {
     const [expression_skipped, delimiter] = skipDelimiter(expression, '');
     expression = expression_skipped;
-    currentChar = expression[0];
-    if (!delimiters.includes(delimiter + currentChar)) {
+    currentChar = expression_skipped[expression_skipped.length - 1];
+    if (!delimiters.includes(delimiter)) {
       throw Error('Delimiter ' + delimiter + ' is not in default delimiters ' + delimiters);
     }
   }
+
   let result = 0;
   if (isEmptyExpression || isDelimiterCurrentChar) {
     const number_acc = Number(acc);
@@ -78,16 +80,16 @@ const recursiveStringCalculator = (expression: string,
     result += number_acc <= 1000 ? number_acc : 0;
   }
   if (!isEmptyExpression) {
-    if (isDelimiterCurrentChar) {
-      result += recursiveStringCalculator(expression.slice(1), '', delimiters, negatives);
-    } else {
-      result += recursiveStringCalculator(expression.slice(1), acc + currentChar, delimiters, negatives);
+    let currentAcc = '';
+    if (!isDelimiterCurrentChar) {
+      currentAcc = acc + currentChar;
     }
+    result += recursiveStringCalculator(expression.slice(1), currentAcc, delimiters, negatives);
   }
   return result;
 };
 
 export const stringCalculator = (expression: string) => {
-  const {'delimiters': parsedDelimiters, 'expression': parserdExpression} = setDelimiters(expression);
-  return recursiveStringCalculator(parserdExpression, '', parsedDelimiters, []);
+  const [parsedDelimiters, parsedExpression] = setDelimiters(expression);
+  return recursiveStringCalculator(parsedExpression, '', parsedDelimiters, []);
 };
