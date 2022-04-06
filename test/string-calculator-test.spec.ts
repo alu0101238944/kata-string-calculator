@@ -35,3 +35,7 @@ test('Should ignore numbers bigger than 1000', () => {
 test('Should be possible to use delimiters of any length with the following format: "//[delimiter]\\n"', () => {
   expect(stringCalculator('//[***]\n1***2***3')).toEqual(6);
 });
+
+test('Should allow multiple delimiters like this: "//[delim1][delim2]\\n"', () => {
+  expect(stringCalculator('//[*][%]\n1*2%3')).toEqual(6);
+});
