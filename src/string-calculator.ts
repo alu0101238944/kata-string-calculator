@@ -1,16 +1,19 @@
 
 const setDelimiters = (expression: string): [string[], string] => {
-  let delimiters = [',', '\n'];
+  let delimiters = [',', '\n']; // Default delimiters
   if (expression.startsWith('//')) {
     expression = expression.slice(2); // '//'
     const current_char = expression[0];
-    if (current_char !== '[') {
+    if (current_char !== '[') { // Unique delimiter
       delimiters = [current_char];
       expression = expression.slice(1);
       if (expression.startsWith('\n')) {
         expression = expression.slice(1);
+      } else {
+        throw Error('Unique delimiter ' + delimiters[0]
+            + ' must be separated from the evaluated expression by a newline');
       }
-    } else {
+    } else { // Multiple delimiters
       delimiters = getMultipleDelimiters(expression, []);
       expression = String(expression.split('\n').slice(1));
     }
@@ -23,9 +26,9 @@ const setDelimiters = (expression: string): [string[], string] => {
 
 const getMultipleDelimiters = (expression: string,
     delimiters: Array<string>) => {
-  expression = expression.slice(1); // [
+  expression = expression.slice(1); // '['
   const delimiter = getDelimiter(expression, '');
-  expression = expression.slice(delimiter.length + 1); // delimiter ]
+  expression = expression.slice(delimiter.length + 1); // delimiter ']'
   delimiters.push(delimiter);
   if (expression[0] === '[') {
     return getMultipleDelimiters(expression, delimiters);
@@ -64,7 +67,7 @@ const recursiveStringCalculator = (expression: string,
     expression = expression_skipped;
     currentChar = expression_skipped[expression_skipped.length - 1];
     if (!delimiters.includes(delimiter)) {
-      throw Error('Delimiter ' + delimiter + ' is not in default delimiters ' + delimiters);
+      throw Error('Delimiter ' + delimiter + ' is not in setted delimiters ' + delimiters);
     }
   }
 
