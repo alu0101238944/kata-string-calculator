@@ -18,23 +18,19 @@ enable_testing()
 add_library(
   string_calculator
   src/string_calculator.cpp
-  headers/string_calculator.hpp
+  headers/string_calculator.h
 )
 
 add_executable(
   string_calculator_test
   test/string_calculator_test.cpp
-  headers/string_calculator.hpp
+  headers/string_calculator.h
 )
 
 target_link_libraries(
   string_calculator_test
   string_calculator
   gtest_main
-)
-
-target_link_libraries(
-  string_calculator
 )
 
 include(GoogleTest)
