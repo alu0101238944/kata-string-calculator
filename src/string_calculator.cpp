@@ -9,8 +9,24 @@ StringCalculator::~StringCalculator() {}
 
 std::string StringCalculator::setDelimiters(std::string expression) {
   if (expression[0] == expression[1] && expression[1] == '/') {
-    delimiters_ = {std::string(1, expression[2])};
-    expression.erase(0, 4);
+    expression.erase(0, 2); // '//'
+    if (expression[0] == '[') {
+      delimiters_ = {};
+      do {
+        expression.erase(0, 1); // '['
+        std::string delimiter = "";
+        while (expression[0] != ']') {
+          delimiter += expression[0];
+          expression.erase(0, 1);
+        }
+        expression.erase(0, 1); // ']'
+        delimiters_.push_back(delimiter);
+      } while (expression[0] == '[');
+    } else {
+      delimiters_ = {std::string(1, expression[0])};
+      expression.erase(0, 1); // delimiter
+    }
+    expression.erase(0, 1); // '\n'
   }
   return expression;
 }

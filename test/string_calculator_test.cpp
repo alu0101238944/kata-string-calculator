@@ -57,3 +57,17 @@ TEST(StringCalculator, shouldNotSumNumbersBiggerThanThousand) {
   EXPECT_EQ(stringCalculator.add("1,2,1001"), 3);
   EXPECT_EQ(stringCalculator.add("1,2,91201,3"), 6);
 }
+
+TEST(StringCalculator, shouldBePossibleDelimitersWithAnyLenght) {
+  StringCalculator stringCalculator;
+
+  EXPECT_EQ(stringCalculator.add("//[**]\n1**2**3"), 6);
+  EXPECT_EQ(stringCalculator.add("//[***]\n1***2***3"), 6);
+}
+
+TEST(StringCalculator, shouldAllowMultipleDelimiters) {
+  StringCalculator stringCalculator;
+
+  EXPECT_EQ(stringCalculator.add("//[**][x]\n1**2**3x3x1"), 10);
+  EXPECT_EQ(stringCalculator.add("//[***][++]\n1***2***3++4***10++15"), 35);
+}
