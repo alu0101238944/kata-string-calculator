@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/string_calculator.h"
+#include <iostream>
 
 TEST(StringCalculator, shouldSumNumbersSeparatedByCommas) {
   StringCalculator stringCalculator;
@@ -7,6 +8,7 @@ TEST(StringCalculator, shouldSumNumbersSeparatedByCommas) {
   EXPECT_EQ(stringCalculator.add(""), 0);
   EXPECT_EQ(stringCalculator.add("1"), 1);
   EXPECT_EQ(stringCalculator.add("1,2"), 3);
+  EXPECT_EQ(stringCalculator.add("12,12,12"), 36);
 }
 
 TEST(StringCalculator, shouldSumNumbersSeparatedByCommasOrNewLines) {
@@ -26,3 +28,25 @@ TEST(StringCalculator, shouldSupportDifferentDelimiters) {
   EXPECT_EQ(stringCalculator.add("//+\n6+4+5+15"), 30);
 }
 
+TEST(StringCalculator, shouldNotAllowNegativesNumbers) {
+  StringCalculator stringCalculator;
+
+  try {
+    stringCalculator.add("-1,2");
+    EXPECT_EQ("", "The exception was not thrown");
+  } catch(const std::string& error) {
+    EXPECT_EQ("Negatives are not allowed: -1", error);
+  }
+  try {
+    stringCalculator.add("1,-2");
+    EXPECT_EQ("", "The exception was not thrown");
+  } catch(const std::string& error) {
+    EXPECT_EQ("Negatives are not allowed: -2", error);
+  }
+  try {
+    stringCalculator.add("1,-2,-3");
+    EXPECT_EQ("", "The exception was not thrown");
+  } catch(const std::string& error) {
+    EXPECT_EQ("Negatives are not allowed: -2, -3", error);
+  }
+}
