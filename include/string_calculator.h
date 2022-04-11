@@ -15,6 +15,7 @@ class StringCalculator {
 
  private:
   std::vector<std::string> splitByDelimiters(std::string expression);
+  std::string setDelimiters(std::string expression);
 
  public:
   int add(std::string expression);

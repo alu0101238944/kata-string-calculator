@@ -16,3 +16,13 @@ TEST(StringCalculator, shouldSumNumbersSeparatedByCommasOrNewLines) {
   EXPECT_EQ(stringCalculator.add("2\n3\n4"), 9);
   EXPECT_EQ(stringCalculator.add("2\n3,4"), 9);
 }
+
+TEST(StringCalculator, shouldSupportDifferentDelimiters) {
+  StringCalculator stringCalculator;
+
+  EXPECT_EQ(stringCalculator.add("//;\n1;2"), 3);
+  EXPECT_EQ(stringCalculator.add("//;\n2;3;4"), 9);
+  EXPECT_EQ(stringCalculator.add("//*\n6*4*10"), 20);
+  EXPECT_EQ(stringCalculator.add("//+\n6+4+5+15"), 30);
+}
+

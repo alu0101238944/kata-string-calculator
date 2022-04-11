@@ -7,7 +7,16 @@ StringCalculator::StringCalculator(void) {
 
 StringCalculator::~StringCalculator() {}
 
+std::string StringCalculator::setDelimiters(std::string expression) {
+  if (expression[0] == expression[1] && expression[1] == '/') {
+    delimiters_ = {std::string(1, expression[2])};
+    expression.erase(0, 4);
+  }
+  return expression;
+}
+
 int StringCalculator::add(std::string expression) {
+  expression = setDelimiters(expression);
   std::vector<std::string> splittedExpression = splitByDelimiters(expression);
   int result = 0;
   for (int i = 0; i < splittedExpression.size(); i++) {
