@@ -26,7 +26,9 @@ int StringCalculator::add(std::string expression) {
     if (integer < 0) {
       negatives.push_back(integer);
     }
-    result += integer;
+    if (integer <= 1000) {
+      result += integer;
+    }
   }
 
   if (negatives.size() > 0) {

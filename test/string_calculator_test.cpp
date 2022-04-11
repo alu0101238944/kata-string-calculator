@@ -50,3 +50,10 @@ TEST(StringCalculator, shouldNotAllowNegativesNumbers) {
     EXPECT_EQ("Negatives are not allowed: -2, -3", error);
   }
 }
+
+TEST(StringCalculator, shouldNotSumNumbersBiggerThanThousand) {
+  StringCalculator stringCalculator;
+
+  EXPECT_EQ(stringCalculator.add("1,2,1001"), 3);
+  EXPECT_EQ(stringCalculator.add("1,2,91201,3"), 6);
+}
