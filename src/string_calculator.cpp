@@ -58,7 +58,6 @@ std::vector<std::string> StringCalculator::splitByDelimiters(std::string express
         }
         currentDelimiter = delimiters_[j];
       }
-      std::cout << i << ",'" << accumulator << "'; ";
       if (currentDelimiter != "") {
         foundDelimiter = true;
         splitted.push_back(accumulator);
@@ -69,7 +68,6 @@ std::vector<std::string> StringCalculator::splitByDelimiters(std::string express
     }
     if (!foundDelimiter) {
       accumulator += expression[i];
-      std::cout << "\n" << accumulator << "\n";
       i++;
     }
   }
