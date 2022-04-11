@@ -2,7 +2,7 @@
 #include "../include/string_calculator.h"
 
 StringCalculator::StringCalculator(void) {
-  delimiters_ = {","};
+  delimiters_ = {",", "\n"};
 }
 
 StringCalculator::~StringCalculator() {}
@@ -21,6 +21,7 @@ std::vector<std::string> StringCalculator::splitByDelimiters(std::string express
   std::vector<std::string> splitted = {};
   size_t i = 0;
   while (i < expression.size()) {
+    bool foundDelimiter = false;
     for (size_t j = 0; j < delimiters_.size(); j++) {
       bool isDelimiter = true;
       for (size_t k = 0; k < delimiters_[j].size(); k++) {
@@ -29,15 +30,17 @@ std::vector<std::string> StringCalculator::splitByDelimiters(std::string express
           break;
         }
       }
-      if (!isDelimiter) {
-        accumulator += expression[i];
-        i++;
-      } else {
+      if (isDelimiter) {
+        foundDelimiter = true;
         splitted.push_back(accumulator);
         i += accumulator.size();
         accumulator = "";
         break;
       }
+    }
+    if (!foundDelimiter) {
+      accumulator += expression[i];
+      i++;
     }
   }
   if (accumulator != "") {
