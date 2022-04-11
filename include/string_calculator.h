@@ -13,7 +13,7 @@ class StringCalculator {
   StringCalculator(void);
   ~StringCalculator();
 
- public:
+ private:
   std::vector<std::string> splitByDelimiters(std::string expression);
 
  public:
