@@ -1,6 +1,7 @@
 module StringCalculator where
 
+import Data.List.Split (splitOn)
+
 sumNumbersInExpression :: String -> Int
-sumNumbersInExpression s
-  | length s == 0 = 0 
-  | otherwise = read s
+sumNumbersInExpression "" = 0
+sumNumbersInExpression s = sum . map read $ (splitOn ",") s
