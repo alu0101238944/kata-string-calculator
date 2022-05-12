@@ -20,3 +20,6 @@ stringCalculatorTests = describe "StringCalculator behaviour" $ do
   it "An expression of numbers separated with commas should evaluate to the sum of those numbers" $ do
     sumNumbersInExpression "1,2" `shouldBe` 3
     sumNumbersInExpression "10,20,30" `shouldBe` 60
+
+  it "An expression of numbers separated with commas or newlines should evaluate to the sum of those numbers" $ do
+    sumNumbersInExpression "1,2\n3" `shouldBe` 6
