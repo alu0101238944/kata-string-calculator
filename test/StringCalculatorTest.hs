@@ -23,3 +23,6 @@ stringCalculatorTests = describe "StringCalculator behaviour" $ do
 
   it "An expression of numbers separated with commas or newlines should evaluate to the sum of those numbers" $ do
     sumNumbersInExpression "1,2\n3" `shouldBe` 6
+
+  it "Should be posible define custom delimiters" $ do
+    sumNumbersInExpression "//;\n1;2" `shouldBe` 3
