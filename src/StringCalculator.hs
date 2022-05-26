@@ -10,9 +10,10 @@ sumNumbersInExpression ('/' : '/' : delimiter : '\n' : rest) =
 sumNumbersInExpression expression = first sum $ checkNegatives $ parseNumbersSeparatedByDelimiters "\n," expression
 
 checkNegatives :: [Int] -> Either [Int] [Int]
-checkNegatives list
-  | any (< 0) list = Right $ filter (< 0) list
-  | otherwise = Left list
+checkNegatives numbers
+  | null negatives = Left numbers
+  | otherwise = Right negatives
+  where negatives = filter (< 0) numbers
 
 parseNumbersSeparatedByDelimiters :: [Char] -> String -> [Int]
 parseNumbersSeparatedByDelimiters delimiters = map read . splitOneOf delimiters
