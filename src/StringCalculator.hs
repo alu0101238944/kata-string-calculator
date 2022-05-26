@@ -5,9 +5,11 @@ import Data.Bifunctor (first)
 
 sumNumbersInExpression :: String -> Either Int [Int]
 sumNumbersInExpression "" = Left 0
-sumNumbersInExpression ('/' : '/' : delimiter : '\n' : rest) =
-    first sum $ checkNegatives $ parseNumbersSeparatedByDelimiters [delimiter] rest
-sumNumbersInExpression expression = first sum $ checkNegatives $ parseNumbersSeparatedByDelimiters "\n," expression
+sumNumbersInExpression ('/' : '/' : delimiter : '\n' : rest) = sumNumbersInExpressionWithDelimiters [delimiter] rest
+sumNumbersInExpression expression = sumNumbersInExpressionWithDelimiters "\n," expression
+
+sumNumbersInExpressionWithDelimiters :: [Char] -> String -> Either Int [Int]
+sumNumbersInExpressionWithDelimiters delimiters = first sum . checkNegatives . parseNumbersSeparatedByDelimiters delimiters
 
 checkNegatives :: [Int] -> Either [Int] [Int]
 checkNegatives numbers
